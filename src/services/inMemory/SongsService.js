@@ -13,11 +13,11 @@ class SongsService {
     title, year, performer, genre, duration,
   }) {
     const id = `song-${nanoid(16)}`;
-    const createdAt = new Date().toISOString();
-    const updatedAt = createdAt;
+    const insertedAt = new Date().toISOString();
+    const updatedAt = insertedAt;
 
     const newSong = {
-      id, title, year, performer, genre, duration, createdAt, updatedAt,
+      id, title, year, performer, genre, duration, insertedAt, updatedAt,
     };
 
     this._songs.push(newSong);

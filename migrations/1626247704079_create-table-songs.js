@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
+
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-  pgm.createTable('notes', {
+  pgm.createTable('songs', {
     id: {
       type: 'VARCHAR(50)',
       primaryKey: true,
@@ -11,12 +12,20 @@ exports.up = (pgm) => {
       type: 'TEXT',
       notNull: true,
     },
-    body: {
+    year: {
+      type: 'INTEGER',
+      notNull: true,
+    },
+    performer: {
       type: 'TEXT',
       notNull: true,
     },
-    tags: {
-      type: 'TEXT[]',
+    genre: {
+      type: 'TEXT',
+      notNull: true,
+    },
+    duration: {
+      type: 'INTEGER',
       notNull: true,
     },
     created_at: {
@@ -31,5 +40,5 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable('notes');
+  pgm.dropTable('songs');
 };

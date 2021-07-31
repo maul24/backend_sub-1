@@ -7,6 +7,7 @@ class PlaylistsHandler {
     this._validator = validator;
 
     this.postPlaylistHandler = this.postPlaylistHandler.bind(this);
+    this.getPlaylistsHandler = this.getPlaylistsHandler.bind(this);
   }
 
   async postPlaylistHandler(request, h) {
@@ -43,6 +44,16 @@ class PlaylistsHandler {
       console.error(error);
       return response;
     }
+  }
+
+  async getPlaylistsHandler() {
+    const playlists = await this._service.getPlaylists();
+    return {
+      status: 'success',
+      data: {
+        playlists,
+      },
+    };
   }
 }
 module.exports = PlaylistsHandler;

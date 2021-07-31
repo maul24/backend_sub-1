@@ -26,6 +26,11 @@ class PlaylistsService {
     return result.rows[0].id;
   }
 
+  async getPlaylists() {
+    const result = await this._pool.query('SELECT * FROM playlists');
+    return result.rows;
+  }
+
   async verifyPlaylistOwner(id, owner) {
     const query = {
       text: 'SELECT * FROM playlists WHERE id = $1',

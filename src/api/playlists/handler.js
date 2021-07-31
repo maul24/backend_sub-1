@@ -2,7 +2,7 @@ const ClientError = require('../../exceptions/ClientError');
 
 /* eslint-disable no-underscore-dangle */
 class PlaylistsHandler {
-  constructure(service, validator) {
+  constructor(service, validator) {
     this._service = service;
     this._validator = validator;
 
@@ -13,8 +13,9 @@ class PlaylistsHandler {
     try {
       this._validator.validatePlaylistPayload(request.payload);
       const { name } = request.payload;
+      const { id: credentialId } = request.auth.credentials;
 
-      const playlistId = await this._service.addPlaylist({ name });
+      const playlistId = await this._service.addPlaylist({ name, owner: credentialId });
 
       const response = h.response({
         status: 'success',

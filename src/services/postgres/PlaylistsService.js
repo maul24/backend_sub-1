@@ -26,9 +26,24 @@ class PlaylistsService {
     return result.rows[0].id;
   }
 
-  async getPlaylists() {
-    const result = await this._pool.query('SELECT * FROM playlists');
+  async getPlaylists(owner) {
+    const query = {
+      text: 'select playlists.id, playlists.name, users.username from playlists, users where playlists.owner = users.id and users.id = $1',
+      values: [owner],
+    };
+    const result = await this._pool.query(query);
     return result.rows;
+  }
+
+  async deletePlaylists(id) {
+    const query = {
+      text: 'DELETE FROM playlists WHERE id = $1 RETURNING id',
+      values: [id],
+    };
+    const result = await this._pool.query(query);
+    if (!result.rows.length) {
+      throw new NotFoundError('Playlists gagal dihapus');
+    }
   }
 
   async verifyPlaylistOwner(id, owner) {

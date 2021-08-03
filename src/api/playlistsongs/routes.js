@@ -15,6 +15,14 @@ const routes = (handler) => [
       auth: 'songsapp_jwt',
     },
   },
+  {
+    method: 'DELETE',
+    path: '/playlists/{playlistId}/songs',
+    handler: handler.deletePlaylistSongsHandler,
+    options: {
+      auth: 'songsapp_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

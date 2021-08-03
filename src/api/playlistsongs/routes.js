@@ -7,6 +7,14 @@ const routes = (handler) => [
       auth: 'songsapp_jwt',
     },
   },
+  {
+    method: 'GET',
+    path: '/playlists/{playlistId}/songs',
+    handler: handler.getPlaylistSongsHandler,
+    options: {
+      auth: 'songsapp_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

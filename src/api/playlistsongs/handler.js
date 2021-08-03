@@ -45,15 +45,36 @@ class PlaylistSongsHandler {
     }
   }
 
-  async getPlaylistSongsHandler(request) {
-    const { id: credentialId } = request.auth.credentials;
-    const playlists = await this._service.getPlaylistSongs(credentialId);
-    return {
-      status: 'success',
-      data: {
-        playlists,
-      },
-    };
+  async getPlaylistSongsHandler(request, h) {
+    try {
+      const { playlistId } = request.params;
+      const { id: credentialId } = request.auth.credentials;
+
+      await this._service.verifyPlaylistOwner(playlistId, credentialId);
+      const songs = await this._service.getPlaylistSongs(credentialId);
+      return {
+        status: 'success',
+        data: {
+          songs,
+        },
+      };
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
+      });
+      response.code(500);
+      console.error(error);
+      return response;
+    }
   }
 }
 module.exports = PlaylistSongsHandler;

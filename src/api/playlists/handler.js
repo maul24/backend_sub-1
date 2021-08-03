@@ -32,7 +32,7 @@ class PlaylistsHandler {
       if (error instanceof ClientError) {
         const response = h.response({
           status: 'fail',
-          massage: error.massage,
+          message: error.message,
         });
         response.code(error.statusCode);
         return response;

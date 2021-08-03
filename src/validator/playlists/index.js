@@ -5,7 +5,7 @@ const PlaylistsValidator = {
   validatePlaylistPayload: (payload) => {
     const validationResult = PlaylistPayloadSchema.validate(payload);
     if (validationResult.error) {
-      throw new InvariantError(validationResult.error.massage);
+      throw new InvariantError(validationResult.error.message);
     }
   },
 };

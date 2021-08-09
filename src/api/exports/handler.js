@@ -14,12 +14,13 @@ class ExportsHandler {
     try {
       this._validator.validateExportSongsPayload(request.payload);
 
-      const { id: credentialId } = request.auth.credentials;
+      const { id: userId } = request.auth.credentials;
       const { playlistId } = request.params;
 
-      await this._playlistsService.verifyPlaylistOwner(playlistId, credentialId);
+      await this._playlistsService.verifyPlaylistOwner(playlistId, userId);
       const message = {
-        userId: request.auth.credentials.id,
+        userId,
+        playlistId,
         targetEmail: request.payload.targetEmail,
       };
 
